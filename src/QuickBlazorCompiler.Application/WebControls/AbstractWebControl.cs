@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace QuickBlazorCompiler.Application.WebControls
 {
+    public interface IWebControlContainer
+    {
+        List<WebControl> Controls { get; }
+    }
+
     public abstract class WebControl
     {
         public string? Id { get; set; }

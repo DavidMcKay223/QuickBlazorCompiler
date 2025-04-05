@@ -14,9 +14,18 @@ namespace QuickBlazorCompiler.Application.WebControls.Layout
             CssClass = "row"; // Default to Bootstrap row
         }
 
-        public void AddColumn(GridColumn column)
+        public GridRow AddColumn(GridColumn column)
         {
             Columns.Add(column);
+
+            return this;
+        }
+
+        public GridRow AddColumn(List<GridColumn> column)
+        {
+            Columns.AddRange(column);
+
+            return this;
         }
 
         public override string GenerateHtml(int indentLevel = 0)
