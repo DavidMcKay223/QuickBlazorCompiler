@@ -10,7 +10,7 @@ namespace QuickBlazorCompiler.Application
     public class Page
     {
         public string FilePath { get; }
-        public List<WebControl> Controls { get; } = new List<WebControl>();
+        public List<WebControl> Controls { get; set; } = new List<WebControl>();
 
         public Page(string filePath)
         {
