@@ -7,7 +7,7 @@ namespace QuickBlazorCompiler.Application.Template
 {
     public static class FormTemplate
     {
-        public static List<GridColumn> GetGridViewAddressFields(string modelPrefix)
+        public static GridColumn[] GetGridViewAddressFields(string modelPrefix)
         {
             var fields = new List<GridColumn>();
 
@@ -24,7 +24,7 @@ namespace QuickBlazorCompiler.Application.Template
             fields.Add(new GridColumn { Children = { CreateDisplayLine("Phone", $"{modelPrefix}.Phone") }, CssClass = "col-md-6" });
             fields.Add(new GridColumn { Children = { CreateDisplayLine("Fax", $"{modelPrefix}.Fax") }, CssClass = "col-md-6" });
 
-            return fields;
+            return fields.ToArray();
         }
 
         public static WebControlGroup GetViewAddressFields(string modelPrefix)
@@ -45,7 +45,7 @@ namespace QuickBlazorCompiler.Application.Template
             return new WebControlGroup(fields);
         }
 
-        public static List<GridColumn> GetGridEditAddressFields(string modelPrefix, string? idPrefix = null)
+        public static GridColumn[] GetGridEditAddressFields(string modelPrefix, string? idPrefix = null)
         {
             // Use the modelPrefix for IDs if no specific idPrefix is given, replacing dots with underscores
             idPrefix ??= modelPrefix.Replace('.', '_');
@@ -170,7 +170,7 @@ namespace QuickBlazorCompiler.Application.Template
             }
             });
 
-            return fields;
+            return fields.ToArray();
         }
 
         public static WebControlGroup GetEditAddressFields(string modelPrefix, string? idPrefix = null)

@@ -48,6 +48,11 @@ namespace QuickBlazorCompiler.Application.WebControls
             Children = children;
         }
 
+        public WebControlGroup(params WebControl[] controls)
+        {
+            Children = new List<WebControl>(controls);
+        }
+
         public override string GenerateHtml(int indentLevel = 0)
         {
             return RenderChildren(Children, indentLevel);

@@ -27,7 +27,7 @@ namespace QuickBlazorCompiler.Application
             var sb = new StringBuilder();
             foreach (var control in Controls)
             {
-                sb.AppendLine(control.GenerateHtml());
+                sb.Append(control.GenerateHtml());
             }
             return sb.ToString();
         }

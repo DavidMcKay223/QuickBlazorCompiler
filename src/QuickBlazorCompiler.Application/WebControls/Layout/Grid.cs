@@ -28,6 +28,13 @@ namespace QuickBlazorCompiler.Application.WebControls.Layout
             return this;
         }
 
+        public GridRow AddColumn(GridColumn[] column)
+        {
+            Columns.AddRange(column);
+
+            return this;
+        }
+
         public override string GenerateHtml(int indentLevel = 0)
         {
             if (!Columns.Any()) return string.Empty; // Don't render empty rows

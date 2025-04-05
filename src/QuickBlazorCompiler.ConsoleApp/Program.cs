@@ -12,48 +12,45 @@ namespace QuickBlazorCompiler.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var page = new Page("Index.razor").AddControls(
-                new Heading(1, "My Generated Page"),
-                new Paragraph("Welcome to this page generated from C#!"),
-                new GridRow().WithCssClass("row g-3").AddColumns(
-                    new GridColumn("col-lg-6 mb-3").AddChildren(
-                        new Card().WithId("card-one").Title("First Card")
-                            .AddBodyControls(
-                                new Paragraph("This uses <strong>extension methods</strong>."),
-                                new Label("Your Name", "nameInput"),
-                                new InputControl(InputType.Text).WithId("nameInput").WithPlaceholder("Enter your name").WithBind("Model.Name"),
-                                new GridRow().AddColumn(FormTemplate.GetGridViewAddressFields("Model.ShippingAddress")),
+            var page = UI.Page("Index.razor",
+                UI.Heading(1, "My Generated Page"),
+                UI.Paragraph("Welcome to this page generated from C#!"),
+                UI.GridRow(columns: new[] {
+                    UI.GridColumn("col-lg-6 mb-3",
+                        UI.Card("card-one", "First Card",
+                            body: UI.Body(
+                                UI.Paragraph("This uses <strong>functional composition</strong>."),
+                                UI.Label("Your Name", "nameInput"),
+                                UI.TextInput("nameInput", "Model.Name", "Enter your name"),
+                                UI.SingleColumnRow(FormTemplate.GetGridViewAddressFields("Model.ShippingAddress")),
                                 FormTemplate.GetViewAddressFields("Model.ShippingAddress")
+                            ),
+                            footer: UI.Body(
+                                UI.Button("Submit", Style.Primary),
+                                UI.Button("Cancel", Style.Secondary, "ms-2")
                             )
-                            .AddFooterControls(
-                                new Button("Submit", Style.Primary),
-                                new Button("Cancel", Style.Secondary).WithCssClass("ms-2")
-                            )
+                        )
                     ),
-                    new GridColumn("col-lg-6 mb-3").AddChildren(
-                        new Card().WithId("card-two")
-                            .AddHeaderControls(new Heading(6, "Another Card").WithCssClass("text-muted"))
-                            .AddBodyControls(
-                                new Paragraph("More content here."),
-                                new Label("Event Date", "eventDate"),
-                                new InputControl(InputType.Date)
-                                    .WithId("eventDate")
-                                    .WithBind("Model.EventDate"),
-                                new GridRow().AddColumn(FormTemplate.GetGridEditAddressFields("Model.ShippingAddress")),
+                    UI.GridColumn("col-lg-6 mb-3",
+                        UI.Card("card-two",
+                            header: UI.Header(UI.Heading(6, "Another Card", "text-muted")),
+                            body: UI.Body(
+                                UI.Paragraph("More content here."),
+                                UI.Label("Event Date", "eventDate"),
+                                UI.DateInput("eventDate", "Model.EventDate"),
+                                UI.SingleColumnRow(FormTemplate.GetGridEditAddressFields("Model.ShippingAddress")),
                                 FormTemplate.GetEditAddressFields("Model.ShippingAddress")
                             )
+                        )
                     )
-                ),
-                new HorizontalRule(),
-                new Heading(2, "End of Generated Content")
+                }),
+                UI.HR(),
+                UI.Heading(2, "End of Generated Content")
             );
 
             page.SaveToFile();
 
             Console.WriteLine("File Generation Process Complete.");
-
-            // === Keep console open ===
-            // Console.ReadKey();
         }
     }
 }
