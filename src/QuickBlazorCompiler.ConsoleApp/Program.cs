@@ -3,6 +3,7 @@ using QuickBlazorCompiler.Application.WebControls;
 using QuickBlazorCompiler.Application.WebControls.HTML;
 using QuickBlazorCompiler.Application.WebControls.Bootstrap;
 using QuickBlazorCompiler.Application.WebControls.Layout;
+using QuickBlazorCompiler.Application.Template;
 
 namespace QuickBlazorCompiler.ConsoleApp
 {
@@ -38,6 +39,10 @@ namespace QuickBlazorCompiler.ConsoleApp
                                                 Id = "nameInput",
                                                 Placeholder = "Enter your name",
                                                 BindValueExpression = "Model.Name" // Binding example
+                                            },
+                                            new GridRow()
+                                            {
+                                                Columns = FormTemplate.GetGridViewAddressFields("Model.ShippingAddress")
                                             }
                                         },
                                         FooterControls =
@@ -55,12 +60,16 @@ namespace QuickBlazorCompiler.ConsoleApp
                                      new Card
                                     {
                                         Id = "card-two",
-                                         HeaderControls = { new Heading(6, "Another Card") { CssClass="text-muted"} },
+                                        HeaderControls = { new Heading(6, "Another Card") { CssClass="text-muted"} },
                                         BodyControls =
                                         {
                                             new Paragraph("More content here."),
                                             new Label("Event Date", "eventDate"),
-                                            new InputControl(InputType.Date){ Id = "eventDate", BindValueExpression="Model.EventDate"}
+                                            new InputControl(InputType.Date){ Id = "eventDate", BindValueExpression="Model.EventDate"},
+                                            new GridRow()
+                                            {
+                                                Columns = FormTemplate.GetGridEditAddressFields("Model.ShippingAddress")
+                                            }
                                         }
                                     }
                                 }

@@ -7,7 +7,7 @@ namespace QuickBlazorCompiler.Application.WebControls.Layout
     // Represents a Bootstrap Row
     public class GridRow : WebControl
     {
-        public List<GridColumn> Columns { get; } = new List<GridColumn>();
+        public List<GridColumn> Columns { get; set; } = new List<GridColumn>();
 
         public GridRow()
         {
@@ -40,7 +40,7 @@ namespace QuickBlazorCompiler.Application.WebControls.Layout
     // Represents a Bootstrap Column
     public class GridColumn : WebControl
     {
-        public List<WebControl> Children { get; } = new List<WebControl>();
+        public List<WebControl> Children { get; set; } = new List<WebControl>();
 
         // Constructor allows setting column classes like "col-md-4"
         public GridColumn(string columnClasses = "col")
@@ -52,7 +52,6 @@ namespace QuickBlazorCompiler.Application.WebControls.Layout
         {
             Children.Add(control);
         }
-
 
         public override string GenerateHtml(int indentLevel = 0)
         {

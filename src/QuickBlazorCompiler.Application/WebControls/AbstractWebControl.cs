@@ -33,4 +33,19 @@ namespace QuickBlazorCompiler.Application.WebControls
             return sb.ToString();
         }
     }
+
+    public class WebControlGroup : WebControl
+    {
+        public List<WebControl> Children { get; }
+
+        public WebControlGroup(List<WebControl> children)
+        {
+            Children = children;
+        }
+
+        public override string GenerateHtml(int indentLevel = 0)
+        {
+            return RenderChildren(Children, indentLevel);
+        }
+    }
 }
