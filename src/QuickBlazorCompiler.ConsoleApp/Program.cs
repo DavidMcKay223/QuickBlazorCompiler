@@ -12,38 +12,41 @@ namespace QuickBlazorCompiler.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var page = new Page("Index.razor")
-                .AddControl(new Heading(1, "My Generated Page"))
-                .AddControl(new Paragraph("Welcome to this page generated from C#!"))
-                .AddControl(new GridRow().CssClass("row g-3")
-                    .AddColumn(new GridColumn("col-lg-6 mb-3")
-                        .AddChild(new Card().Id("card-one").Title("First Card")
-                            .AddBodyControl(new Paragraph("This uses <strong>extension methods</strong>."))
-                            .AddBodyControl(new Label("Your Name", "nameInput"))
-                            .AddBodyControl(new InputControl(InputType.Text) { Id = "nameInput", Placeholder = "Enter your name", BindValueExpression = "Model.Name" })
-                            .AddBodyControl(new GridRow()
-                                .AddColumn(FormTemplate.GetGridViewAddressFields("Model.ShippingAddress"))
+            var page = new Page("Index.razor").AddControls(
+                new Heading(1, "My Generated Page"),
+                new Paragraph("Welcome to this page generated from C#!"),
+                new GridRow().WithCssClass("row g-3").AddColumns(
+                    new GridColumn("col-lg-6 mb-3").AddChildren(
+                        new Card().WithId("card-one").Title("First Card")
+                            .AddBodyControls(
+                                new Paragraph("This uses <strong>extension methods</strong>."),
+                                new Label("Your Name", "nameInput"),
+                                new InputControl(InputType.Text).WithId("nameInput").WithPlaceholder("Enter your name").WithBind("Model.Name"),
+                                new GridRow().AddColumn(FormTemplate.GetGridViewAddressFields("Model.ShippingAddress")),
+                                FormTemplate.GetViewAddressFields("Model.ShippingAddress")
                             )
-                            .AddBodyControl(FormTemplate.GetViewAddressFields("Model.ShippingAddress"))
-                            .AddFooterControl(new Button("Submit", Style.Primary))
-                            .AddFooterControl(new Button("Cancel", Style.Secondary).CssClass("ms-2"))
-                        )
-                    )
-                    .AddColumn(new GridColumn("col-lg-6 mb-3")
-                        .AddChild(new Card().Id("card-two")
-                            .AddHeaderControl(new Heading(6, "Another Card").CssClass("text-muted"))
-                            .AddBodyControl(new Paragraph("More content here."))
-                            .AddBodyControl(new Label("Event Date", "eventDate"))
-                            .AddBodyControl(new InputControl(InputType.Date) { Id = "eventDate", BindValueExpression = "Model.EventDate" })
-                            .AddBodyControl(new GridRow()
-                                .AddColumn(FormTemplate.GetGridEditAddressFields("Model.ShippingAddress"))
+                            .AddFooterControls(
+                                new Button("Submit", Style.Primary),
+                                new Button("Cancel", Style.Secondary).WithCssClass("ms-2")
                             )
-                            .AddBodyControl(FormTemplate.GetEditAddressFields("Model.ShippingAddress"))
-                        )
+                    ),
+                    new GridColumn("col-lg-6 mb-3").AddChildren(
+                        new Card().WithId("card-two")
+                            .AddHeaderControls(new Heading(6, "Another Card").WithCssClass("text-muted"))
+                            .AddBodyControls(
+                                new Paragraph("More content here."),
+                                new Label("Event Date", "eventDate"),
+                                new InputControl(InputType.Date)
+                                    .WithId("eventDate")
+                                    .WithBind("Model.EventDate"),
+                                new GridRow().AddColumn(FormTemplate.GetGridEditAddressFields("Model.ShippingAddress")),
+                                FormTemplate.GetEditAddressFields("Model.ShippingAddress")
+                            )
                     )
-                )
-                .AddControl(new HorizontalRule())
-                .AddControl(new Heading(2, "End of Generated Content"));
+                ),
+                new HorizontalRule(),
+                new Heading(2, "End of Generated Content")
+            );
 
             page.SaveToFile();
 
