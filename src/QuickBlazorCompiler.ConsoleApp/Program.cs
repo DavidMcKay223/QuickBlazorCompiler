@@ -13,41 +13,31 @@ namespace QuickBlazorCompiler.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var page = Page("Index.razor",
-                Heading(1, "My Generated Page"),
-                Paragraph("Welcome to this page generated from C#!"),
-                GridRow(columns: [
-                    GridColumn("col-lg-6 mb-3",
-                        Card("card-one", "First Card",
-                            body: Body(
-                                Paragraph("This uses <strong>functional composition</strong>."),
-                                Label("Your Name", "nameInput"),
-                                InputText("nameInput", "Model.Name", "Enter your name"),
-                                SingleColumnRow(FormTemplate.GetGridViewAddressFields("Model.ShippingAddress")),
-                                FormTemplate.GetViewAddressFields("Model.ShippingAddress")
+            var page = Page("Index.razor")
+                .AddComponents(
+                    Heading(1, "My Generated Page"),
+                    Paragraph("Welcome to this page generated from C#!"),
+                    GridRow()
+                        .WithColumns(
+                            GridColumn("col-lg-6 mb-3",
+                                Card("card-one", "First Card",
+                                    body: Body(
+                                        Paragraph("This uses <strong>functional composition</strong>.")
+                                    )
+                                ).WithFooter(
+                                    Button("Submit", Style.Primary),
+                                    Button("Cancel", Style.Secondary, "ms-2")
+                                )
                             ),
-                            footer: Footer(
-                                Button("Submit", Style.Primary),
-                                Button("Cancel", Style.Secondary, "ms-2")
+                            GridColumn("col-lg-6 mb-3",
+                                Card("card-two")
+                                    .WithHeader(Heading(6, "Another Card", "text-muted"))
+                                    .WithBody(
+                                        Paragraph("More content here."),
+                                        SingleColumnRow(FormTemplate.GetGridEditAddressFields("Model.ShippingAddress"))
+                                    )
                             )
-                        )
-                    ),
-                    GridColumn("col-lg-6 mb-3",
-                        Card("card-two",
-                            header: Header(Heading(6, "Another Card", "text-muted")),
-                            body: Body(
-                                Paragraph("More content here."),
-                                Label("Event Date", "eventDate"),
-                                InputDate("eventDate", "Model.EventDate"),
-                                SingleColumnRow(FormTemplate.GetGridEditAddressFields("Model.ShippingAddress")),
-                                FormTemplate.GetEditAddressFields("Model.ShippingAddress")
-                            )
-                        )
-                    )
-                ]),
-                HR(),
-                Heading(2, "End of Generated Content")
-            );
+                        ));
 
             page.SaveToFile();
 

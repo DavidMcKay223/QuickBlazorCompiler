@@ -15,7 +15,7 @@ namespace QuickBlazorCompiler.Application
         public static Page Page(string filename, params WebControl[] content)
             => new Page(filename) { Controls = new List<WebControl>(content) };
 
-        public static Heading Heading(int level, string text, string cssClass = null)
+        public static Heading Heading(int level, string text, string? cssClass = null)
             => new Heading(level, text) { CssClass = cssClass };
 
         public static Paragraph Paragraph(string html)
