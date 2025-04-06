@@ -27,7 +27,7 @@ namespace QuickBlazorCompiler.Application
         public static GridRow GridRow(string cssClass = "row g-3", params GridColumn[] columns)
             => new GridRow() { CssClass = cssClass, Columns = new List<GridColumn>(columns) };
 
-        public static GridColumn GridColumn(string cssClass, params WebControl[] children)
+        public static GridColumn GridColumn(string cssClass = "col", params WebControl[] children)
             => new GridColumn(cssClass) { Children = new List<WebControl>(children) };
 
         public static Card Card(string id = null, string title = null, WebControl header = null, WebControl body = null, WebControl footer = null)
@@ -60,21 +60,40 @@ namespace QuickBlazorCompiler.Application
         }
 
         // Helper for Card sections to handle multiple controls more easily
+        public static WebControlGroup Group(params WebControl[] controls) => new WebControlGroup(controls);
+
         public static WebControlGroup Body(params WebControl[] controls) => new WebControlGroup(controls);
+
         public static WebControlGroup Header(params WebControl[] controls) => new WebControlGroup(controls);
+
         public static WebControlGroup Footer(params WebControl[] controls) => new WebControlGroup(controls);
 
         // Specific HTML elements
         public static Label Label(string text, string htmlFor) => new Label(text, htmlFor);
-        public static InputControl TextInput(string id, string bind, string placeholder = null)
-            => new InputControl(InputType.Text) { Id = id, BindValueExpression = bind, Placeholder = placeholder };
-        public static InputControl DateInput(string id, string bind)
+        
+        public static InputControl InputText(string cssClass, string id, string bind, string? placeholder = null, bool isRequired = false)
+            => new InputControl(InputType.Text) { CssClass = cssClass, Id = id, BindValueExpression = bind, Placeholder = placeholder, IsRequired = isRequired };
+
+        public static InputControl InputTel(string cssClass, string id, string bind, string? placeholder = null)
+            => new InputControl(InputType.Tel) { CssClass = cssClass, Id = id, BindValueExpression = bind, Placeholder = placeholder };
+
+        public static InputControl InputDate(string id, string bind)
             => new InputControl(InputType.Date) { Id = id, BindValueExpression = bind };
+        
         public static Button Button(string text, Style style, string cssClass = null)
             => new Button(text, style) { CssClass = cssClass };
 
         // Helper for single column GridRow (for things like address fields)
         public static GridRow SingleColumnRow(params GridColumn[] controls)
             => new GridRow().AddColumn(controls);
+
+        // Helper to generate unique IDs
+        public static string FieldId(string prefix, string fieldName) => $"{prefix}_{fieldName}";
+
+        // Helper to generate binding expressions
+        public static string BindExpr(string prefix, string fieldName) => $"{prefix}.{fieldName}";
+
+        public static Paragraph DisplayLine(string label, string valueExpression) =>
+                new Paragraph($"<strong>{label}:</strong> @({valueExpression})");
     }
 }

@@ -22,7 +22,7 @@ namespace QuickBlazorCompiler.ConsoleApp
                             body: Body(
                                 Paragraph("This uses <strong>functional composition</strong>."),
                                 Label("Your Name", "nameInput"),
-                                TextInput("nameInput", "Model.Name", "Enter your name"),
+                                InputText("nameInput", "Model.Name", "Enter your name"),
                                 SingleColumnRow(FormTemplate.GetGridViewAddressFields("Model.ShippingAddress")),
                                 FormTemplate.GetViewAddressFields("Model.ShippingAddress")
                             ),
@@ -38,7 +38,7 @@ namespace QuickBlazorCompiler.ConsoleApp
                             body: Body(
                                 Paragraph("More content here."),
                                 Label("Event Date", "eventDate"),
-                                DateInput("eventDate", "Model.EventDate"),
+                                InputDate("eventDate", "Model.EventDate"),
                                 SingleColumnRow(FormTemplate.GetGridEditAddressFields("Model.ShippingAddress")),
                                 FormTemplate.GetEditAddressFields("Model.ShippingAddress")
                             )
